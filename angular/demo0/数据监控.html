@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>数据监控</title>
+    <script src="../js/angular.js"></script>
+    <script>
+        var app =angular.module("app",[]);
+        app.controller("testCtrl",function ($scope) {
+            $scope.num=1;
+            $scope.change = function () {
+                $scope.num++;
+            };
+
+            $scope.$watch("num",function (newValue,oldValue) {
+                alert("newValue:"+newValue+"|oldValue:"+oldValue)
+            });
+
+            $scope.arr = [0,1,2];
+
+            $scope.$watch("arr", function(newValue) {
+                alert("change:" + newValue.join(","));
+            });
+
+            $scope.changeArr = function() {
+                $scope.arr=[7,8]
+            };
+            $scope.changeArr2 = function() {
+                $scope.arr.push($scope.arr.length) ;
+            };
+
+            $scope.arr2 = [0,1,2];
+            $scope.$watch("arr2", function(newValue) {
+                alert("change:" + newValue.join(","));
+            },true);
+            $scope.changeArr3 = function() {
+                $scope.arr.push($scope.arr.length) ;
+            };
+        });
+    </script>
+</head>
+<body ng-controller="testCtrl">
+<h3>数据监控</h3>
+<h6>基本监控</h6>
+num:{{num}}<br>
+<button ng-click="change()">num++</button>
+<h6>数组监控</h6>
+<pre>
+    $scope.arr = [0];
+
+    $scope.$watch("arr", function(newValue) {
+        alert("change:" + newValue.join(","));
+    });
+
+    $scope.changeArr = function() {
+        $scope.arr = [7, 8];
+    };
+</pre>
+<ul>
+    <li ng-repeat="item in arr">
+        {{item}}
+    </li>
+</ul>
+<h4>普通的$watch只能监控到最直接的赋值，包括各种基本类型，以及复杂类型的引用赋值</h4>
+<button ng-click="changeArr()">changeArr=[7,8]</button>
+<h4>但这种不能监控更深层的改变</h4>
+<button ng-click="changeArr2()">changeArr</button>
+<h4>这时就得实用$watch的第三个参数</h4>
+
+</body>
+</html>

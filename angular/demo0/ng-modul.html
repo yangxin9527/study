@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--<script src="../js/require.js"></script>-->
+    <!--<script>-->
+        <!--require.config({-->
+            <!--paths:{-->
+                <!--angular:'../js/angular'-->
+            <!--}-->
+        <!--})-->
+        <!--require(['angular'],function () {-->
+          <!--var app = angular.module("app",[]);-->
+            <!--app.controller('myCtrl', function($scope) {-->
+                <!--$scope.firstName = "John";-->
+                <!--$scope.lastName = "Doe";-->
+            <!--});-->
+          <!---->
+        <!--})-->
+    <!--</script>-->
+    <script src="../js/angular.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+        app.controller('testCtrl', function($scope) {
+            $scope.firstName = "John";
+            $scope.lastName = "Doe";
+            $scope.info=[
+                {
+                    name:"yx",
+                    gender:"0"
+                },{
+                    name:"xiaoming",
+                    gender:"1"
+                }
+            ];
+            $scope.formatGender =function (gender) {
+                if(gender==0)
+                    return "男";
+                else
+                    return "女";
+            };
+            $scope.abs=function (num) {
+                return Math.abs(num);
+            }
+        });
+        app.controller("arrayCtrl",function ($scope) {
+            $scope.arr= [1,1,2]
+            $scope.add=function () {
+                $scope.arr.push($scope.arr.length+1)
+            };
+            $scope.arr2=[
+                [11, 12, 13],
+                [21, 22, 23],
+                [31, 32, 33]
+            ];
+            $scope.obj = {
+                a: 1,
+                b: 2,
+                c: 3
+            };
+        })
+    </script>
+</head>
+<body  ng-app="app">
+
+<input type="text" ng-model="a">
+<input type="text" ng-model="a">
+{{a}}
+
+<div ng-controller="testCtrl">
+    {{firstName+lastName}}
+    <div>
+        <h3>对模型的二次计算</h3>
+        <ul>
+            <li ng-repeat="people in info">
+                {{people.name}}：{{people.gender}} {{formatGender(people.gender)}}
+            </li>
+        </ul>
+    </div>
+
+    {{abs(-1)}}<br>
+    例子只是为了说明可以这么用，但不表示这是最佳方案。<br>
+    Angular为这类需求提供了一种叫做filter的方案，可以在插值表达式中使用管道操作符来格式化数据，这个我们后面再细看。
+</div>
+
+<div ng-controller="arrayCtrl">
+
+
+    <h3>track by</h3>
+    <pre>
+        arr = [1,1,2]
+        ng-repeat= item in arr
+    </pre>
+    <p>当数组为[1,1,2]时，ng-repeat会报错，则需要指定索引，使用track by $index</p>
+    <button ng-click="add()">add</button>
+    <ul>
+        <li ng-repeat="item in arr track by $index">
+            {{$index}}::::{{item}}
+        </li>
+    </ul>
+
+    <h3>多维数组迭代出来</h3>
+    <pre>
+        arr2=[
+                [11, 12, 13],
+                [21, 22, 23],
+                [31, 32, 33]
+            ]
+    </pre>
+    <ul>
+        <li ng-repeat="item in arr2">
+            <ul>
+                <li ng-repeat="childItem in item">
+                    {{childItem}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>遍历对象</h3>
+    <pre>
+
+        $scope.obj = {
+            a: 1,
+            b: 2,
+            c: 3
+        };
+    </pre>
+    <ul>
+        <li ng-repeat="(key,value) in obj">
+            {{key}} : {{value}}
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>
