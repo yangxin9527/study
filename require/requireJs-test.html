@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Title</title>
+ <script src="js/require.js"></script>
+ <script>
+   require.config({
+       paths:{
+           jquery:['httpuery','js/lib/jquery'],
+           a:'js/lib/test-a'
+       }
+   })
+//   当第一个地址错误，会请求后面地址
+  require(["jquery","a"],function ($) {
+      $("body").html(1);
+  })
+ </script>
+</head>
+<body>
+
+</body>
+</html>

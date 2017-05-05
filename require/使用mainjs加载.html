@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script data-main="./js/app/main.js" src="./js/require.js"></script>
+    <script>
+        require(["jquery"],function ($) {
+            $("#test").html("it worked")
+        })
+    </script>
+</head>
+<body>
+<div id="test"></div>
+ 加载requirejs脚本的script标签加入了data-main属性，这个属性指定的js将在加载完reuqire.js后处理，<br>
+ 我们把require.config的配置加入到data-main后，就可以使每一个页面都使用这个配置，然后页面中就可<br>
+ 以直接使用require来加载所有的短模块名<br>
+ data-main还有一个重要的功能，当script标签指定data-main属性时，require会默认的将data-main指<br>
+ 定的js为根路径，是什么意思呢？如上面的data-main="js/main"设定后，我们在使用require(['jquery'])<br>
+ 后(不配置jquery的paths)，require会自动加载js/jquery.js这个文件，而不是jquery.js，相当于默认配置了：<br>
+<code>
+    require.config({
+    baseUrl : "js"
+    })
+</code>
+</body>
+</html>

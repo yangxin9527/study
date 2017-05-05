@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/require.js"></script>
+    <script>
+//        require.config({
+//            paths:{
+//                "underscore":"https://cdn.bootcss.com/underscore.js/1.2.1/underscore-min"
+//            },
+//            shim: {
+//                "underscore" : {
+//                    exports : "underscore"
+//                }
+//            }
+//        });
+//        require(["underscore"], function(underscore){
+//            underscore.each([1,2,3], alert);
+//        })
+        require.config({
+            paths:{
+                underscore:"https://cdn.bootcss.com/underscore.js/1.2.1/underscore-min"
+            },
+            shim:{
+                underscore:{
+                    exports:"a"
+                }
+            }
+        })
+        require(["underscore"],function (a) {
+            a.each(["成功","啦啦啦","underscore"],alert)
+        })
+    </script>
+</head>
+<body>
+    <h3>加载第三方模块</h3>
+    <div>
+        通过require加载的模块一般都要符合AMD规范即使用define申明模块，但当加载非AMD模块规范的js,就用到
+        <p>shim</p>
+        译为 “垫”
+        <br>
+        也就是垫一层，包裹一层
+    </div>
+<div>
+    比如老版本jquery 没有及继承AMD 规范，则
+    <pre>
+           require({
+            shim({
+                "underscore" : {
+                    exports : "_";
+                }
+            })
+        })
+    </pre>
+</div>
+</body>
+</html>
