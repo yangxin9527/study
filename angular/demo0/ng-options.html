@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/angular.js"></script>
+</head>
+<body ng-controller="testCtrl">
+<h3>ng-options的用法</h3>
+<img src="../images/ng-options.png" alt="" title="原文地址：http://www.ncloud.hk/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/ng-options-usage/">
+<div>
+    <select ng-options="data for data in arr" ng-model="dataModel">data</select>
+    <select ng-options="(data.id+data.val) for data in arr2" ng-model="dataModel2">data.id+data.val</select>
+
+    <select ng-options="o.id group by o.MainCategory for o in optData" ng-model="dataModel3"></select>
+</div>
+</body>
+
+<script>
+    angular.module("app",[])
+        .controller("testCtrl",function ($scope) {
+            $scope.arr=[1,2,3,4,5,6,7,8,9];
+            $scope.arr2=[
+                {id:0,val:"四川"},
+                {id:1,val:"湖北"},
+                {id:2,val:"山东"},
+                {id:3,val:"广东"}
+            ];
+            $scope.optData = [{
+                id: 10001,
+                MainCategory: '男',
+                ProductName: '水洗T恤',
+                ProductColor: '白'
+            },{
+                id: 10002,
+                MainCategory: '女',
+                ProductName: '圓領长袖',
+                ProductColor: '黃'
+            },{
+                id: 10003,
+                MainCategory: '女',
+                ProductName: '圓領短袖',
+                ProductColor: '黃'
+            }];
+            $scope.dataModel2=$scope.arr2[3];
+        })
+
+</script>
+</html>

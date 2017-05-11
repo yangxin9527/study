@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/angular.js"></script>
+</head>
+<body ng-app="app">
+<h3>数据联动</h3>
+<div ng-controller="regionCtrl">
+    <ul>
+        <li ng-click="change(province.id,province.val)" ng-repeat="province in provinceArr">
+           <button>{{province.val}}</button>
+        </li>
+    </ul>
+    <ul>
+        <li ng-repeat="city in cityArr" ng-click="changeCity(city.id,city.val)">{{city.val}}</li>
+    </ul>
+    省份id：{{provinceSelect}}<br>
+    省份：{{provinceSelectVal}}<br>
+    城市id：{{citySelect}}<br>
+    城市:{{citySelectVal}}
+</div>
+
+<h4>select</h4>
+<div ng-controller="regionBySelectCtrl">
+
+    <select name="province" id="province" ng-model="provinceModel" ng-options="(province.id+province.val) for province in provinceArr"></select>
+
+    <select name="city" id="city" ng-model="cityModel" ng-show="cityArr.length" ng-options="(city.id+city.val) for city in cityArr"></select>
+    <br>
+    省份：{{provinceSelect}}<br>
+    市：{{citySelect}}
+</div>
+</body>
+<script>
+    angular.module('app',[])
+        .controller("regionCtrl",function ($scope) {
+            $scope.provinceArr = [
+                {id:0,val:"四川"},
+                {id:1,val:"湖北"},
+                {id:2,val:"山东"},
+                {id:3,val:"广东"}
+            ];
+            $scope.cityArr = [];
+            $scope.change =function (id,val) {
+                $scope.provinceSelect = id;
+                $scope.provinceSelectVal = val;
+            };
+            $scope.changeCity =function (id,val) {
+                $scope.citySelect = id;
+                $scope.citySelectVal = val;
+            };
+            $scope.$watch("provinceSelect",function (provinceSelect) {
+              switch(provinceSelect){
+                  case 0:{
+                      $scope.cityArr =[
+                          {id:101,val:"成都"},
+                          {id:102,val:"绵阳"},
+                          {id:220,val:"乐山"}
+                      ];
+                      break;
+                  }
+                  case 1:{
+                      $scope.cityArr =[
+                          {id:101,val:"武汉"},
+                          {id:102,val:"黄石"},
+                          {id:220,val:"仙桃"}
+                      ];
+                      break;
+                  }
+                  default:{
+                      $scope.cityArr =[];
+                  }
+                }
+            },false);
+        })
+        .controller("regionBySelectCtrl",function ($scope) {
+            $scope.provinceArr = [
+                {id:0,val:"四川"},
+                {id:1,val:"湖北"},
+                {id:2,val:"山东"},
+                {id:3,val:"广东"}
+            ];
+            $scope.provinceModel = $scope.provinceArr[0];
+
+//
+            $scope.$watch("provinceModel",function (data) {
+                $scope.provinceSelect = data;
+
+                switch(data.id){
+                    case 0:{
+                        $scope.cityArr =[
+                            {id:101,val:"成都"},
+                            {id:102,val:"绵阳"},
+                            {id:220,val:"乐山"}
+                        ];
+                        break;
+                    }
+                    case 1:{
+                        $scope.cityArr =[
+                            {id:101,val:"武汉"},
+                            {id:102,val:"黄石"},
+                            {id:220,val:"仙桃"}
+                        ];
+                        break;
+                    }
+                    default:{
+                        $scope.cityArr =[];
+                    }
+                }
+                $scope.cityModel = $scope.cityArr[0];
+            })
+
+
+            $scope.$watch("cityModel",function (data) {
+                console.log(data);
+                $scope.citySelect = data;
+            },true)
+
+
+
+        })
+</script>
+</html>

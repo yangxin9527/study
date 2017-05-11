@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/angular.js"></script>
+</head>
+<body>
+<!--徐飞DEMO-->
+<!--<style>-->
+    <!--.active{-->
+        <!--background: #ddd;-->
+    <!--}-->
+<!--</style>-->
+<!--<div ng-controller="testCtrl">-->
+    <!--<ul class="list-group" >-->
+        <!--<li ng-repeat="item in items" ng-class="{true:'list-group-item active', false: 'list-group-item'}[item==selectedItem]" ng-click="select(item)">-->
+            <!--<button ng-click="select(item.title)">-->
+                <!--{{item.title}}-->
+
+            <!--</button>-->
+        <!--</li>-->
+    <!--</ul>-->
+    <!--<input type="text" value="{{selectedItem}}">-->
+<!--</div>-->
+<!--<script>-->
+    <!--var app= angular.module("app",[]);-->
+    <!--app.controller("testCtrl",function ($scope) {-->
+        <!--$scope.items = [];-->
+
+        <!--for (var i=0; i<10; i++) {-->
+            <!--$scope.items.push({-->
+                <!--title:i-->
+            <!--});-->
+        <!--}-->
+        <!--console.log($scope.items)-->
+        <!--$scope.selectedItem = $scope.items[0];-->
+
+        <!--$scope.select = function(item) {-->
+            <!--$scope.selectedItem = item;-->
+        <!--};-->
+    <!--})-->
+
+<!--</script>-->
+<!-------------------------------------->
+<!-------------------------------------->
+<style>
+    .normal{
+        height: 20px;
+        color:#333;
+        border-bottom: 1px solid red;
+    }
+
+    .active{
+        height:40px;
+        background: #ccc;
+    }
+
+</style>
+<div ng-controller="testCtrl">
+    <ul>
+        <li ng-repeat="item in items" ng-click="liClick(item.title)" class="normal" ng-class="{true:'active'}[item.title==index]">
+            {{item}}
+        </li>
+    </ul>
+
+    <h3>可以使用ng-show和ng-hide来实现简单的显示隐藏</h3>
+    <button ng-click="changeStatus()">{{status}}</button>
+    <div ng-show="status">ng-show和ng-hide对应的css是
+        <pre>
+            display:block和display:none
+        </pre>
+    </div>
+    <div ng-hide="status">
+        现在他们隐藏了哟
+    </div>
+    <button ng-disabled="status">button</button>
+    <p>============================</p>
+
+    <h5>状态控制</h5>
+    <p>ng-if也是可以控制元素隐藏和显示的。</p>
+    <pre>
+        所谓的show和hide，意味着DOM元素已经存在，只是控制了是否显示，
+        而if则起到了流程控制的作用，只有符合条件的DOM元素才会被创建，否则不创建。
+        区别还是很大的。
+    </pre>
+    <h3>通过审查元素能很清楚的看到if和show的区别</h3>
+    <div ng-controller="IfCtrl">
+        <ul>
+            <li ng-if="condition=='ok'">ok</li>
+            <li ng-if="condition=='no'">no</li>
+
+            <li ng-show="condition=='ok'">show 1</li>
+            <li ng-show="condition=='no'">show 2</li>
+        </ul>
+
+        <button ng-click="change()">change</button>
+    </div>
+
+    <h3>switch控制,和ng-if方式是一样的</h3>
+    <div ng-controller="switchCtrl">
+        <ul ng-switch="condition">
+            <li ng-switch-when="A">A</li>
+            <li ng-switch-when="B">B</li>
+            <li ng-switch-when="C">C</li>
+            <li ng-switch-when="D">D</li>
+        </ul>
+        <button ng-click="changeA()">changeA</button>
+        <button ng-click="changeB()">changeB</button>
+        <button ng-click="changeC()">changeC</button>
+        <button ng-click="changeD()">changeD</button>
+    </div>
+</div>
+
+<script>
+    angular.module("app",[])
+        .controller("testCtrl",function ($scope) {
+            $scope.items=[];
+            for(var i = 0;i<10;i++){
+                $scope.items.push({
+                    title:i
+                })
+            }
+            console.log( $scope.items);
+            $scope.liClick=function (index) {
+                $scope.index = index;
+            }
+
+//            ng-show ng-hide
+            $scope.status = true;
+            $scope.changeStatus=function () {
+                $scope.status = !$scope.status;
+            }
+        })
+        .controller("IfCtrl",function ($scope) {
+            $scope.condition = "ok";
+            $scope.change = function() {
+                $scope.condition = ($scope.condition =="ok")?"no":"ok";
+            };
+        })
+        .controller("switchCtrl",function ($scope) {
+            $scope.condition = "A";
+            $scope.changeA =function () {
+                $scope.condition = "A"
+            }
+            $scope.changeB =function () {
+                $scope.condition = "B"
+            }
+            $scope.changeC =function () {
+                $scope.condition = "C"
+            }
+            $scope.changeD =function () {
+                $scope.condition = "D"
+            }
+        })
+
+</script>
+
+
+
+
+</body>
+</html>
