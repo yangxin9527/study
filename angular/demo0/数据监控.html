@@ -66,6 +66,10 @@ num:{{num}}<br>
 <h4>但这种不能监控更深层的改变</h4>
 <button ng-click="changeArr2()">changeArr</button>
 <h4>这时就得实用$watch的第三个参数</h4>
-
+    <pre>
+        $scope.$watch("arr", function(newValue) {
+            alert("change:" + newValue.join(","));
+        },ture);
+    </pre>
 </body>
 </html>
